@@ -62,15 +62,17 @@ def main():
           if data:
             json.dump(data, output_file)
             output_file.write('\n')
-            crawled_file.write(str(i) + '\n')
             print('Scraped %s: %s' % (i_as_string, data))
             consecutive_failures = 0
           else:
             print('Issue scraping %s.' % i_as_string)
             consecutive_failures += 1
-            if consecutive_failures >= MAX_FAILS:
-              print('Too many failures. Probably at the end.')
-              break
+
+          # Always record what pages we have crawled, even if unsuccessful.
+          crawled_file.write(str(i) + '\n')
+          if consecutive_failures >= MAX_FAILS:
+            print('Too many failures. Probably at the end.')
+            break
         else:
           print('Network issue prevented requesting %s. Aborting' % i_as_string)
           break
