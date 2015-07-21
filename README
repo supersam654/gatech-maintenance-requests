@@ -2,7 +2,13 @@
 
 This project is an analysis of all maintenance requests accepted by the Georgia Tech Department of Housing since 10/12/2005. This is the earliest time I can find work orders (GH-1185).
 
-# License
+## Dependencies
+
+* Python (2 or 3)
+* Requests
+* BeautifulSoup 4
+
+## License
 
 I'm not sure what license the actual work order data is under. I have been unable to find any information on the rights related to this data. I'd assume that it's copyright Georgia Tech though.
 
