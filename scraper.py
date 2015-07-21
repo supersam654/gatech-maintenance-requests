@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup as BS
 
 # Empirical checking has found that this is the lowest value that is available online.
 START_WORK_ORDER = 1185
+MAX_FAILS = 100
 
 def get_row_val(table, row_num, index):
   return table.find_all('tr')[row_num].find_all('td')[index].text.strip()
@@ -38,12 +39,13 @@ def scrape_page(html):
 
 def main():
   crawled_file = open('crawled.txt', 'a+')
+  crawled_file.seek(0)
   # output_file is delimited by the newline character. Each line consists of a json blob of data.
   output_file = open('data.txt', 'a+')
 
   crawled_values = set()
   for line in crawled_file:
-    crawled_values.add(line)
+    crawled_values.add(line.strip())
 
   consecutive_failures = 0
 
@@ -66,7 +68,7 @@ def main():
           else:
             print('Issue scraping %s.' % i_as_string)
             consecutive_failures += 1
-            if consecutive_failures >= 10:
+            if consecutive_failures >= MAX_FAILS:
               print('Too many failures. Probably at the end.')
               break
         else:
