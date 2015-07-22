@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup as BS
 
 # Empirical checking has found that this is the lowest value that is available online.
 START_WORK_ORDER = 1185
-MAX_FAILS = 100
+MAX_FAILS = 1000
 
 def get_row_val(table, row_num, index):
   return table.find_all('tr')[row_num].find_all('td')[index].text.strip()
@@ -24,7 +24,7 @@ def scrape_page(html):
     data['building'] = get_row_val(table, 9, 1)
     data['location_id'] = get_row_val(table, 9, 3)
     data['request_date'] = get_row_val(table, 10, 1)
-    data['request_time'] = get_row_val(table, 9, 3)
+    data['request_time'] = get_row_val(table, 10, 3)
     data['status'] = get_row_val(table, 11, 1)
     data['shop'] = get_row_val(table, 11, 3)
     data['code'] = get_row_val(table, 12, 1)
