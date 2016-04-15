@@ -3,7 +3,6 @@
 import json
 from collections import defaultdict
 from datetime import datetime
-import operator
 
 OUT_FILE = 'summaries.json'
 IN_FILE = 'data.txt'
