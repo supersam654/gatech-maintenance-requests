@@ -12,7 +12,6 @@ function getData (jsonUrl, cb) {
 }
 
 function addChart (chartId, chartType, chartData, chartOptions) {
-  console.log(chartData)
   var ctx = document.getElementById(chartId).getContext('2d')
   return new Chart(ctx)[chartType](chartData, chartOptions)
 }
@@ -58,7 +57,6 @@ function sortByMonth (data) {
     sortableMonths.push([month, months[month]])
   }
   sortableMonths.sort()
-  console.log(sortableMonths)
 
   var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   var dataset = []
@@ -73,7 +71,38 @@ function sortByMonth (data) {
   }
 }
 
+function sortByBuilding (data) {
+  var buildings = {}
+  for (var yearMonth in data.by_building) {
+    for (var building in data.by_building[yearMonth]) {
+      buildings[building] = buildings[building] || 0
+      buildings[building] += data.by_building[yearMonth][building]
+    }
+  }
+
+  var sortableBuildings = []
+  for (var building in buildings) {
+    sortableBuildings.push([building, buildings[building]])
+  }
+  sortableBuildings.sort()
+
+  var labels = []
+  var dataset = []
+  for (var i = 0; i < sortableBuildings.length; i++) {
+    var building = sortableBuildings[i]
+    labels.push(building[0])
+    dataset.push(building[1])
+  }
+
+  return {
+    labels: labels,
+    datasets: [{label: 'Requests by Month', data: dataset}]
+  }
+}
+
 getData('summaries.json', function (data) {
   addChart('requestsByYear', 'Bar', sortByYear(data))
   addChart('requestsByMonth', 'Bar', sortByMonth(data))
+  console.log(data)
+  addChart('requestsByBuilding', 'Bar', sortByBuilding(data))
 })
