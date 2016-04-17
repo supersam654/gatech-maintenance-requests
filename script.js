@@ -17,25 +17,16 @@ function addChart (chartId, chartType, chartData, chartOptions) {
 }
 
 function sortByYear (data) {
-  var years = {}
-  for (var yearMonth in data.by_month) {
-    var year = yearMonth.split('-')[0]
-    years[year] = years[year] || 0
-    years[year] += data.by_month[yearMonth]
-  }
-
-  var sortableYears = []
-  for (var year in years) {
-    sortableYears.push([year, years[year]])
-  }
-  sortableYears.sort()
+  data.by_year.sort(function (a, b) {
+    return a.year < b.year
+  }).reverse()
 
   var labels = []
   var dataset = []
-  for (var i = 0; i < sortableYears.length; i++) {
-    var year = sortableYears[i]
-    labels.push(year[0])
-    dataset.push(year[1])
+  for (var i = 0; i < data.by_year.length; i++) {
+    var year = data.by_year[i]
+    labels.push(year.year)
+    dataset.push(year.count)
   }
 
   return {
@@ -45,24 +36,15 @@ function sortByYear (data) {
 }
 
 function sortByMonth (data) {
-  var months = {}
-  for (var yearMonth in data.by_month) {
-    var month = yearMonth.split('-')[1]
-    months[month] = months[month] || 0
-    months[month] += data.by_month[yearMonth]
-  }
-
-  var sortableMonths = []
-  for (var month in months) {
-    sortableMonths.push([month, months[month]])
-  }
-  sortableMonths.sort()
+  data.by_month.sort(function (a, b) {
+    return a.month < b.month
+  }).reverse()
 
   var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   var dataset = []
-  for (var i = 0; i < sortableMonths.length; i++) {
-    var month = sortableMonths[i]
-    dataset.push(month[1])
+  for (var i = 0; i < data.by_month.length; i++) {
+    var month = data.by_month[i]
+    dataset.push(month.count)
   }
 
   return {
@@ -72,31 +54,21 @@ function sortByMonth (data) {
 }
 
 function sortByBuilding (data) {
-  var buildings = {}
-  for (var yearMonth in data.by_building) {
-    for (var building in data.by_building[yearMonth]) {
-      buildings[building] = buildings[building] || 0
-      buildings[building] += data.by_building[yearMonth][building]
-    }
-  }
-
-  var sortableBuildings = []
-  for (var building in buildings) {
-    sortableBuildings.push([building, buildings[building]])
-  }
-  sortableBuildings.sort()
+  data.by_building.sort(function (a, b) {
+    return a.building < b.building
+  }).reverse()
 
   var labels = []
   var dataset = []
-  for (var i = 0; i < sortableBuildings.length; i++) {
-    var building = sortableBuildings[i]
-    labels.push(building[0])
-    dataset.push(building[1])
+  for (var i = 0; i < data.by_building.length; i++) {
+    var building = data.by_building[i]
+    labels.push(building.building)
+    dataset.push(building.count)
   }
 
   return {
     labels: labels,
-    datasets: [{label: 'Requests by Month', data: dataset}]
+    datasets: [{label: 'Requests by Building', data: dataset}]
   }
 }
 
