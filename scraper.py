@@ -75,6 +75,12 @@ def get_last_request():
     return db.requests.find().sort([('work_request', -1)]).limit(1)[0]['work_request']
 
 def saveData(request_data):
+    request_data['work_request'] = int(request_data['work_request'])
+    request_data['ack_date'] = request_data['accept_date'] or request_data['reject_date']
+    if request_data['ack_date']:
+        datetime.datetime.strptime(request_data['ack_date'], '%d/%m/%Y')
+    else:
+        request_data['ack_date'] = None
     db.requests.insert(request_data)
 
 def main():
