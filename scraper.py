@@ -78,10 +78,13 @@ def saveData(request_data):
     request_data['work_request'] = int(request_data['work_request'])
     request_data['ack_date'] = request_data['accept_date'] or request_data['reject_date']
     if request_data['ack_date']:
-        datetime.datetime.strptime(request_data['ack_date'], '%d/%m/%Y')
+        datetime.datetime.strptime(request_data['ack_date'], '%m/%d/%Y')
     else:
-        request_data['ack_date'] = None
+        # Don't save requests that haven't been acknowledged yet.
+        print('Skipping request because it has no acknowledged date.')
+        return False
     db.requests.insert(request_data)
+    return True
 
 def main():
     consecutive_failures = 0
@@ -104,8 +107,10 @@ def main():
                 print('Scraped order (%s): %s' % (work_order_number, order_data))
                 print('Scraped %s: %s' % (i_as_string, request_data))
                 request_data['order_data'] = order_data
-                saveData(request_data)
-                consecutive_failures = 0
+                if saveData(request_data):
+                    consecutive_failures = 0
+                else:
+                    consecutive_failures += 1
             else:
                 print('Issue scraping %s.' % i_as_string)
                 consecutive_failures += 1
