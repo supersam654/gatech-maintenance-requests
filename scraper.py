@@ -84,31 +84,30 @@ def main():
     try:
         while True:
             i_as_string = str(i)
-            if i_as_string not in crawled_values:
-                print('Requesting Work Request: %s' % i_as_string)
-                work_request = download_request(i_as_string)
-                if work_request:
-                    request_data = scrape_request(work_request)
-                    if request_data:
-                        work_order_number = request_data['work_order']
-                        if work_order_number:
-                            print('Requesting Work Order: %s' % work_order_number)
-                            work_order = download_order(work_order_number)
-                            order_data = scrape_order(work_order)
-                        else:
-                            order_data = None
-                        print('Scraped order (%s): %s' % (work_order_number, order_data))
-                        print('Scraped %s: %s' % (i_as_string, request_data))
-                        request_data['order_data'] = order_data
-                        json.dump(request_data, output_file)
-                        output_file.write('\n')
-                        consecutive_failures = 0
+            print('Requesting Work Request: %s' % i_as_string)
+            work_request = download_request(i_as_string)
+            if work_request:
+                request_data = scrape_request(work_request)
+                if request_data:
+                    work_order_number = request_data['work_order']
+                    if work_order_number:
+                        print('Requesting Work Order: %s' % work_order_number)
+                        work_order = download_order(work_order_number)
+                        order_data = scrape_order(work_order)
                     else:
-                        print('Issue scraping %s.' % i_as_string)
-                        consecutive_failures += 1
+                        order_data = None
+                    print('Scraped order (%s): %s' % (work_order_number, order_data))
+                    print('Scraped %s: %s' % (i_as_string, request_data))
+                    request_data['order_data'] = order_data
+                    json.dump(request_data, output_file)
+                    output_file.write('\n')
+                    consecutive_failures = 0
                 else:
-                    print('Network issue prevented requesting %s. Aborting' % i_as_string)
-                    break
+                    print('Issue scraping %s.' % i_as_string)
+                    consecutive_failures += 1
+            else:
+                print('Network issue prevented requesting %s. Aborting' % i_as_string)
+                break
             if consecutive_failures >= MAX_FAILS:
                 print('Too many failures. Probably at the end.')
                 break
