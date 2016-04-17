@@ -5,13 +5,13 @@ import json
 from bs4 import BeautifulSoup as BS
 
 START_WORK_ORDER = 0
-MAX_FAILS = 1000
+MAX_FAILS = 10
 
 def get_row_val(table, row_num, index):
   return table.find_all('tr')[row_num].find_all('td')[index].text.strip()
 
 def scrape_request(html):
-  soup = BS(html)
+  soup = BS(html, 'lxml')
   table = soup.find('table')
 
   try:
