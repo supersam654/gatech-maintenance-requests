@@ -9,22 +9,20 @@ def main():
     db = client['work_orders']
     i = 0
 
-    bulkUpdate = db.requests.initialize_unordered_bulk_op()
-    foundRequest = False
+    print("Deleting requests DB so we don't think about duplicates.")
+    db.requests.drop()
 
     with open(IN_FILE) as f:
+        documents = []
         for line in f:
+            documents.append(json.loads(line))
             i += 1
             if i % 1000 == 0:
-                if foundRequest: bulkUpdate.execute()
-                bulkUpdate = db.requests.initialize_unordered_bulk_op()
+                db.requests.insert_many(documents)
+                documents = []
                 print('Loaded %d records' % i)
-                foundRequest = False
 
-            data = json.loads(line)
-            bulkUpdate.find(data).upsert().update_one({'$set': data})
-            foundRequest = True
-    if foundRequest: bulkUpdate.execute()
+        if len(documents) > 0: db.requests.insert_many(documents)
 
 if __name__ == '__main__':
     main()
