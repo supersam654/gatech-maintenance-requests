@@ -1,3 +1,0 @@
-crawled.txt filter=lfs -crlf
-data.txt filter=lfs -crlf
-summaries.json filter=lfs -crlf
