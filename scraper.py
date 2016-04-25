@@ -2,6 +2,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup as BS
+import datetime
 
 import db
 
@@ -32,7 +33,7 @@ def scrape_request(html):
         return None
 
 def scrape_order(html):
-    soup = BS(html)
+    soup = BS(html, 'lxml')
     table = soup.find('table')
 
     try:
@@ -78,7 +79,7 @@ def saveData(request_data):
     request_data['work_request'] = int(request_data['work_request'])
     request_data['ack_date'] = request_data['accept_date'] or request_data['reject_date']
     if request_data['ack_date']:
-        datetime.datetime.strptime(request_data['ack_date'], '%m/%d/%Y')
+        request_data['ack_date'] = datetime.datetime.strptime(request_data['ack_date'], '%m/%d/%Y')
     else:
         # Don't save requests that haven't been acknowledged yet.
         print('Skipping request because it has no acknowledged date.')
