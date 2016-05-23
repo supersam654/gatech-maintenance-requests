@@ -1,8 +1,11 @@
 import re
 from collections import defaultdict
 import json
+from bson import json_util
 
 import db
+
+OUT_FILE = 'frontend_data/categories.json'
 
 with open('descriptions.json') as f:
     descriptions = json.load(f)
@@ -48,15 +51,17 @@ def get_all_codes_and_meta():
             code_meta = get_code_meta(code)
             code_meta['category'] = category
             meta[category][code] = code_meta
-        yield category, meta[category]
-    #
-    # return categories, meta
+    return categories, meta
 
 def main():
     print('Generating all metadata for all request types.')
-    for category, category_meta in get_all_codes_and_meta():
+    categories, meta = get_all_codes_and_meta()
+    for category in categories:
+        category_meta = meta[category]
         for meta_code in category_meta.values():
             db.code_meta.update({'code': meta_code['code']}, meta_code, upsert=True)
+    with open(OUT_FILE, 'w') as f:
+        json.dump(meta, f, default=json_util.default)
 
 if __name__ == '__main__':
     main()

@@ -3,7 +3,7 @@ import json
 
 import db
 
-OUT_FILE = 'summaries.json'
+OUT_FILE = 'frontend_data/summaries.json'
 
 def summarize_by_year():
     pipeline = [{
