@@ -49,14 +49,14 @@ def get_all_codes_and_meta():
             code_meta['category'] = category
             meta[category][code] = code_meta
         yield category, meta[category]
-    # 
+    #
     # return categories, meta
 
 def main():
     print('Generating all metadata for all request types.')
     for category, category_meta in get_all_codes_and_meta():
         for meta_code in category_meta.values():
-            db.code_meta.insert(meta_code)
+            db.code_meta.update({'code': meta_code['code']}, meta_code, upsert=True)
 
 if __name__ == '__main__':
     main()
