@@ -21,21 +21,21 @@
   </a>
   <div id="menu">
     <div class="pure-menu">
-      <a class="pure-menu-heading" href="#">Cool Data!</a>
+      <span class="pure-menu-heading">Cool Data!</span>
       <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a href="#" class="pure-menu-link pure-menu-selected">Home</a></li>
-        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Information</a></li>
-        <li class="pure-menu-item"><a href="#" class="pure-menu-link">About</a></li>
+        <li class="pure-menu-item"><a href="#graphs" class="pure-menu-link pure-menu-selected">Graphs</a></li>
+        <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">Categories</a></li>
+        <li class="pure-menu-item"><a href="#codes" class="pure-menu-link">Codes</a></li>
       </ul>
     </div>
   </div>
   <div id="main">
     <div class="header">
       <h1>Georgia Tech Housing Maintenance Requests</h1>
-      <h2><span class="strike">Pointless</span>Awesome Visualzations of all GT Housing Maintenance Requests since 2004</h2>
+      <h2><span class="strike">Pointless</span>Awesome Visualizations of all GT Housing Maintenance Requests since 2004</h2>
     </div>
 
-    <div class="content">
+    <div class="content" id="graphs">
       <h2 class="content-subhead">Requests by Year</h2>
       <div id="requests-by-year" class="ct-chart ct-golden-section"></div>
     </div>
@@ -47,32 +47,29 @@
       <h2 class="content-subhead">Requests by Building</h2>
       <div id="requests-by-building" class="ct-chart ct-golden-section"></div>
     </div>
+
+    <div class="content" id="categories">
+      <h2 class="content-subhead">Request Categories</h2>
+      <p>All maintenance requests are manually categorized by facilities to (presumably) better coordinate plans of action to deal with problems. Below is a table of all request codes seen so far along with some metadata and a manually-guessed description of each code.</p>
+      <table class="pure-table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Count</th>
+                <th>Description</th>
+                <th>Sample</th>
+            </tr>
+        </thead>
+        <tbody id="codes-body">
+          <!-- To be filled in via Javascript. -->
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-<script src="js/script.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/categories.js"></script>
 <script src="js/ui.js"></script>
 </body>
 </html>
-
-
-<!--
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>GT Housing Maintenence Request Data</title>
-  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-</head>
-<body>
-  <h1>Requests by Year</h1>
-  <canvas id="requestsByYear" width="1000" height="400"></canvas>
-
-  <h1>Requests by Month</h1>
-  <canvas id="requestsByMonth" width="1000" height="400"></canvas>
-
-  <h1>Requests by Building</h1>
-  <canvas id="requestsByBuilding" width="1000" height="400"></canvas>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
-  <script src="script.js"></script>
-</body> -->

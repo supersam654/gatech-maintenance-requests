@@ -75,7 +75,7 @@ function showChartByBuilding (data) {
   new Chartist.Bar('#requests-by-building', chartData)
 }
 
-getData('summaries.json', function (data) {
+getData('frontend_data/summaries.json', function (data) {
   showChartByYear(data)
   showChartByMonth(data)
   showChartByBuilding(data)
