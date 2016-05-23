@@ -11,12 +11,7 @@ function getData (jsonUrl, cb) {
   request.send()
 }
 
-function addChart (chartId, chartType, chartData, chartOptions) {
-  var ctx = document.getElementById(chartId).getContext('2d')
-  return new Chart(ctx)[chartType](chartData, chartOptions)
-}
-
-function sortByYear (data) {
+function showChartByYear (data) {
   data.by_year.sort(function (a, b) {
     return a.year < b.year
   }).reverse()
@@ -29,13 +24,15 @@ function sortByYear (data) {
     dataset.push(year.count)
   }
 
-  return {
+  var chartData = {
     labels: labels,
-    datasets: [{label: 'Requests by Year', data: dataset}]
+    series: [dataset]
   }
+
+  new Chartist.Bar('#requests-by-year', chartData)
 }
 
-function sortByMonth (data) {
+function showChartByMonth (data) {
   data.by_month.sort(function (a, b) {
     return a.month < b.month
   }).reverse()
@@ -47,34 +44,39 @@ function sortByMonth (data) {
     dataset.push(month.count)
   }
 
-  return {
+  var chartData = {
     labels: labels,
-    datasets: [{label: 'Requests by Month', data: dataset}]
+    series: [dataset]
   }
+
+  new Chartist.Bar('#requests-by-month', chartData)
 }
 
-function sortByBuilding (data) {
+function showChartByBuilding (data) {
   data.by_building.sort(function (a, b) {
-    return a.building < b.building
-  }).reverse()
+    return a.count < b.count
+  })
 
   var labels = []
   var dataset = []
-  for (var i = 0; i < data.by_building.length; i++) {
+  // Cap chart at top 10 biggest problem buildings.
+  var maxBuildings = Math.min(10, data.by_building.length)
+  for (var i = 0; i < maxBuildings; i++) {
     var building = data.by_building[i]
     labels.push(building.building)
     dataset.push(building.count)
   }
 
-  return {
+  var chartData = {
     labels: labels,
-    datasets: [{label: 'Requests by Building', data: dataset}]
+    series: [dataset]
   }
+
+  new Chartist.Bar('#requests-by-building', chartData)
 }
 
 getData('summaries.json', function (data) {
-  addChart('requestsByYear', 'Bar', sortByYear(data))
-  addChart('requestsByMonth', 'Bar', sortByMonth(data))
-  console.log(data)
-  addChart('requestsByBuilding', 'Bar', sortByBuilding(data))
+  showChartByYear(data)
+  showChartByMonth(data)
+  showChartByBuilding(data)
 })
