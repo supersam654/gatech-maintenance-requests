@@ -35,6 +35,9 @@ function makeCodeTableRow (codeData) {
   var firstUsage = new Date(codeData.first_date.$date)
   var lastUsage = new Date(codeData.last_date.$date)
   var element = document.createElement('tr')
+  // Used for jumping to a particular code in a table.
+  element.id = codeData.code
+
   element.appendChild(makeTableCell(codeData.code))
   element.appendChild(makeTableCell(codeData.count))
   element.appendChild(makeTableCell(firstUsage.toDateString()))
@@ -75,7 +78,13 @@ function makeCodeTables (data) {
 function makeCodeTableBody (categoryData) {
   var tbody = document.createElement('tbody')
   var isOdd = false
+  var codes = []
   for (code in categoryData) {
+    codes.push(code)
+  }
+  codes.sort()
+  for (var i = 0; i < codes.length; i++) {
+    var code = codes[i]
     var tableRow = makeCodeTableRow(categoryData[code])
     if (isOdd) {
       tableRow.classList.add('pure-table-odd')

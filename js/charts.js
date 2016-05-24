@@ -11,6 +11,10 @@ function getData (jsonUrl, cb) {
   request.send()
 }
 
+var lineOptions = {
+  lineSmooth: false
+}
+
 function showChartByYear (data) {
   data.by_year.sort(function (a, b) {
     return a.year < b.year
@@ -29,7 +33,7 @@ function showChartByYear (data) {
     series: [dataset]
   }
 
-  new Chartist.Bar('#requests-by-year', chartData)
+  new Chartist.Line('#requests-by-year', chartData, lineOptions)
 }
 
 function showChartByMonth (data) {
@@ -49,7 +53,7 @@ function showChartByMonth (data) {
     series: [dataset]
   }
 
-  new Chartist.Bar('#requests-by-month', chartData)
+  new Chartist.Line('#requests-by-month', chartData, lineOptions)
 }
 
 function showChartByBuilding (data) {

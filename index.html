@@ -23,9 +23,8 @@
     <div class="pure-menu">
       <span class="pure-menu-heading">Cool Data!</span>
       <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a href="#graphs" class="pure-menu-link pure-menu-selected">Graphs</a></li>
+        <li class="pure-menu-item"><a href="#graphs" class="pure-menu-link">Graphs</a></li>
         <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">Categories</a></li>
-        <li class="pure-menu-item"><a href="#codes" class="pure-menu-link">Codes</a></li>
       </ul>
     </div>
   </div>
@@ -37,20 +36,23 @@
 
     <div class="content" id="graphs">
       <h2 class="content-subhead">Requests by Year</h2>
+      <p>Note that 2004 is lower than expected because the system wasn't put into place until the summer (missing roughly half of the year). Also, the current year will look low because it is incomplete. It will look exceptionally low if you're looking at data before August.</p>
       <div id="requests-by-year" class="ct-chart ct-double-octave"></div>
     </div>
     <div class="content">
       <h2 class="content-subhead">Requests by Month</h2>
+      <p>Notice how a ton of requests are submitted in August and, to a lesser extent, in January. These peaks are most likely caused by students moving into new dorms in the fall (large peak in August) and returning to their dorms with new complaints in the spring (smaller peak in January). There is also a subtle peak in May as summer students move in. This can be seen by the rediculously low volume of requests in June and July.
       <div id="requests-by-month" class="ct-chart ct-double-octave"></div>
     </div>
     <div class="content">
       <h2 class="content-subhead">Requests by Building</h2>
-      <div id="requests-by-building" class="ct-chart ct-octave"></div>
+      <div id="requests-by-building" class="ct-chart ct-double-octave"></div>
     </div>
 
     <div class="content" id="categories">
       <h2 class="content-subhead">Request Categories</h2>
       <p>All maintenance requests are manually categorized by facilities to (presumably) better coordinate plans of action to deal with problems. Below is a table of all request codes seen so far along with some metadata and a manually-guessed description of each code.</p>
+      <p>Note that "First Occurrence" and "Last Occurrence" are provided to see when a code was first put into use (most of the codes were created long after the 2004 debut of the system) and if they are still used today (several are one-offs or discontinued).</p>
       <!-- Will get appended with Javascript. -->
     </div>
   </div>
