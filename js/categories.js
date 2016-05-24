@@ -17,33 +17,76 @@ function makeTableCell (text) {
   return cell
 }
 
+function makeCodeTableHead () {
+  var table = document.createElement('table')
+  table.classList.add('pure-table')
+  table.innerHTML = '<thead><tr>' +
+      '<th>Code</th>' +
+      '<th>Count</th>' +
+      '<th>First Occurrence</th>' +
+      '<th>Last Occurrence</th>' +
+      '<th>Description</th>' +
+      '<th>Sample</th>' +
+      '</th></thead>'
+  return table
+}
+
 function makeCodeTableRow (codeData) {
+  var firstUsage = new Date(codeData.first_date.$date)
+  var lastUsage = new Date(codeData.last_date.$date)
   var element = document.createElement('tr')
   element.appendChild(makeTableCell(codeData.code))
   element.appendChild(makeTableCell(codeData.count))
+  element.appendChild(makeTableCell(firstUsage.toDateString()))
+  element.appendChild(makeTableCell(lastUsage.toDateString()))
   element.appendChild(makeTableCell(codeData.description))
   element.appendChild(makeTableCell(codeData.sample_request))
 
   return element
 }
 
-function fillTableWithCodes (data) {
-  var tbody = document.getElementById('codes-body')
-  var isOdd = false
-  for (category in data) {
-    for (code in data[category]) {
-      // {"CRP009": {"count": 216, "category": "CRP", "code": "CRP009", "description": "Ceiling problems (e.g. paint chipping)", "sample_request": "The panel behind the kitchen sink is badly warped. Could it be fixed? Thank you!", "first_date": {"$date": 1113782400000}, "last_date": {"$date": 1461556800000}}
-      var tableRow = makeCodeTableRow(data[category][code])
-      if (isOdd) {
-        tableRow.classList.add('pure-table-odd')
-      }
-      isOdd = !isOdd
+function getCategories (codeData) {
+  categories = []
+  for (var category in codeData) {
+    categories.push(category)
+  }
+  categories.sort()
 
-      tbody.appendChild(tableRow)
-    }
+  return categories
+}
+
+function makeCodeTables (data) {
+  var categories = getCategories(data)
+  var container = document.getElementById('categories')
+  for (var i = 0; i < categories.length; i++) {
+    var category = categories[i]
+    var codeData = data[category]
+    var table = makeCodeTableHead()
+    table.appendChild(makeCodeTableBody(codeData))
+    var header = document.createElement('h3')
+    header.innerText = category
+
+    container.appendChild(document.createElement('br'))
+    container.appendChild(header)
+    container.appendChild(table)
   }
 }
 
+function makeCodeTableBody (categoryData) {
+  var tbody = document.createElement('tbody')
+  var isOdd = false
+  for (code in categoryData) {
+    var tableRow = makeCodeTableRow(categoryData[code])
+    if (isOdd) {
+      tableRow.classList.add('pure-table-odd')
+    }
+    isOdd = !isOdd
+
+    tbody.appendChild(tableRow)
+  }
+  return tbody
+}
+
 getData('frontend_data/categories.json', function (data) {
-  fillTableWithCodes(data)
+  makeCodeTables(data)
 })
