@@ -54,9 +54,8 @@ function getCategories (codeData) {
   return categories
 }
 
-function makeCodeTables (data) {
+function makeCodeTables (data, container) {
   var categories = getCategories(data)
-  var container = document.getElementById('categories')
   for (var i = 0; i < categories.length; i++) {
     var category = categories[i]
     var codeData = data[category]
@@ -86,6 +85,41 @@ function makeCodeTableBody (categoryData) {
     tbody.appendChild(tableRow)
   }
   return tbody
+}
+
+function makeTopCodesSection (data, container) {
+  var MAX_CODES = 10
+  var codes = []
+  for (var category in data) {
+    for (var code in data[category]) {
+      codes.push(data[category][code])
+    }
+  }
+
+  codes.sort(function (a, b) {
+    return a.count - b.count
+  }).reverse()
+  codes = codes.slice(0, MAX_CODES)
+
+  var labels = []
+  var series = []
+  for (var i = 0; i < codes.length; i++) {
+    var code = codes[i]
+    labels.push(code.code)
+    series.push(code.count)
+  }
+  // Add a pretty chart.
+  var chartData = {
+    labels: labels,
+    series: [series]
+  }
+
+  new Chartist.Bar('#top-codes-chart', chartData, barOptions)
+
+  // Add the data table.
+  var table = makeCodeTableHead()
+  table.appendChild(makeCodeTableBody(codes))
+  container.appendChild(table)
 }
 
 function showChartByCodesPerYear (data) {
@@ -125,6 +159,7 @@ function showChartByCodesPerYear (data) {
 }
 
 getData('frontend_data/categories.json', function (data) {
-  makeCodeTables(data)
+  makeCodeTables(data, document.getElementById('categories'))
+  makeTopCodesSection(data, document.getElementById('top-codes'))
   showChartByCodesPerYear(data)
 })
