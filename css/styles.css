@@ -5,3 +5,15 @@
 .ct-chart svg {
   overflow: visible;
 }
+
+.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+  stroke: rgba(255, 0, 0, 0.2);
+}
+
+.ct-label {
+  fill: #333;
+}
+
+.ct-bar {
+  stroke-width: 30px;
+}

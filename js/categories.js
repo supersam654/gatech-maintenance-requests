@@ -49,11 +49,7 @@ function makeCodeTableRow (codeData) {
 }
 
 function getCategories (codeData) {
-  categories = []
-  for (var category in codeData) {
-    categories.push(category)
-  }
-  categories.sort()
+  categories = Object.keys(codeData).sort()
 
   return categories
 }
@@ -78,11 +74,7 @@ function makeCodeTables (data) {
 function makeCodeTableBody (categoryData) {
   var tbody = document.createElement('tbody')
   var isOdd = false
-  var codes = []
-  for (code in categoryData) {
-    codes.push(code)
-  }
-  codes.sort()
+  var codes = Object.keys(categoryData).sort()
   for (var i = 0; i < codes.length; i++) {
     var code = codes[i]
     var tableRow = makeCodeTableRow(categoryData[code])
@@ -96,6 +88,43 @@ function makeCodeTableBody (categoryData) {
   return tbody
 }
 
+function showChartByCodesPerYear (data) {
+  codesAdded = {}
+  codesRemoved = {}
+  for (var category in data) {
+    var categoryData = data[category]
+    for (var code in categoryData) {
+      var codeData = categoryData[code]
+      var createdYear = new Date(codeData.first_date.$date).getFullYear()
+      var discontinuedYear = new Date(codeData.last_date.$date).getFullYear()
+
+      // Poor-man's default dictionary.
+      codesAdded[createdYear] = codesAdded[createdYear] + 1 || 1
+      codesRemoved[discontinuedYear] = codesRemoved[discontinuedYear] + 1 || 1
+    }
+  }
+
+  var firstYear = Math.min.apply(null, Object.keys(codesAdded))
+  var lastYear = new Date().getFullYear()
+
+  var labels = []
+  var added = []
+  var removed = []
+  for (var year = firstYear; year <= lastYear; year++) {
+    labels.push(year)
+    added.push(codesAdded[year] || 0)
+    removed.push(-codesRemoved[year] || 0)
+  }
+
+  var chartData = {
+    labels: labels,
+    series: [added, removed]
+  }
+
+  new Chartist.Bar('#codes-by-year', chartData)
+}
+
 getData('frontend_data/categories.json', function (data) {
   makeCodeTables(data)
+  showChartByCodesPerYear(data)
 })

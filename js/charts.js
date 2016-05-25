@@ -12,7 +12,24 @@ function getData (jsonUrl, cb) {
 }
 
 var lineOptions = {
-  lineSmooth: false
+  lineSmooth: false,
+  axisY: {
+    showLabel: false
+  },
+  plugins: [
+    Chartist.plugins.ctPointLabels()
+  ],
+  fullWidth: true
+}
+
+var barOptions = {
+  axisY: {
+    showLabel: false
+  },
+  plugins: [
+    Chartist.plugins.ctPointLabels()
+  ],
+  fullWidth: true
 }
 
 function showChartByYear (data) {
@@ -59,7 +76,7 @@ function showChartByMonth (data) {
 function showChartByBuilding (data) {
   data.by_building.sort(function (a, b) {
     return a.count - b.count
-  })
+  }).reverse()
 
   var labels = []
   var dataset = []
@@ -76,7 +93,7 @@ function showChartByBuilding (data) {
     series: [dataset]
   }
 
-  new Chartist.Bar('#requests-by-building', chartData)
+  new Chartist.Bar('#requests-by-building', chartData, barOptions)
 }
 
 getData('frontend_data/summaries.json', function (data) {

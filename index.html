@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Some cool information on Georgia Tech Housing maintenance requests.">
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <link rel="stylesheet" href="css/side-menu.css">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <!-- Bite me for putting a JS file in the head. It's integral to the whole site. -->
   <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
   <title>GT Housing Maintenence Request Data</title>
@@ -23,8 +23,13 @@
     <div class="pure-menu">
       <span class="pure-menu-heading">Cool Data!</span>
       <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a href="#graphs" class="pure-menu-link">Graphs</a></li>
-        <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">Categories</a></li>
+        <li class="pure-menu-item"><a href="#top-codes" class="pure-menu-link">Top 10 Request Types</a></li>
+        <li class="pure-menu-item"><a href="#by-year" class="pure-menu-link">Requests by Year</a></li>
+        <li class="pure-menu-item"><a href="#by-month" class="pure-menu-link">Requests by Month</a></li>
+        <li class="pure-menu-item"><a href="#by-building" class="pure-menu-link">Requests by Building</a></li>
+        <li class="pure-menu-item"><a href="#needy-buildings" class="pure-menu-link">Needy Buildings</a></li>
+        <li class="pure-menu-item"><a href="#codes-over-time" class="pure-menu-link">Codes Over Time</a></li>
+        <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">All Codes</a></li>
       </ul>
     </div>
   </div>
@@ -34,19 +39,39 @@
       <h2><span class="strike">Pointless</span>Awesome Visualizations of all GT Housing Maintenance Requests since 2004</h2>
     </div>
 
-    <div class="content" id="graphs">
+    <div class="content" id="top-codes">
+      <h2 class="content-subhead">Most Popular Request Types</h2>
+      <p>Housing does manually categorizes every single request into a bucket. These buckets get very specific (there are different buckets for <a href="#APP004">stoves</a> and <a href="#APP002">microwaves</a>).Below are the ten most common types of requests housing receives.</p>
+      <code>TODO: Actually make this chart.</code>
+      <!-- Will get appended with Javascript. -->
+    </div>
+
+    <div class="content" id="by-year">
       <h2 class="content-subhead">Requests by Year</h2>
       <p>Note that 2004 is lower than expected because the system wasn't put into place until the summer (missing roughly half of the year). Also, the current year will look low because it is incomplete. It will look exceptionally low if you're looking at data before August.</p>
       <div id="requests-by-year" class="ct-chart ct-double-octave"></div>
     </div>
-    <div class="content">
+    <div class="content" id="by-month">
       <h2 class="content-subhead">Requests by Month</h2>
       <p>Notice how a ton of requests are submitted in August and, to a lesser extent, in January. These peaks are most likely caused by students moving into new dorms in the fall (large peak in August) and returning to their dorms with new complaints in the spring (smaller peak in January). There is also a subtle peak in May as summer students move in. This can be seen by the rediculously low volume of requests in June and July.
       <div id="requests-by-month" class="ct-chart ct-double-octave"></div>
     </div>
-    <div class="content">
+    <div class="content" id="by-building">
       <h2 class="content-subhead">Requests by Building</h2>
       <div id="requests-by-building" class="ct-chart ct-double-octave"></div>
+    </div>
+
+    <div class="content" id="needy-buildings">
+      <h2 class="content-subhead">Most Needy Buildings</h2>
+      <p>I had a very powerful hunch that buildings with the most requests were either larger or older than other buildings. To control for this, I normalized requests per building by averaging over years since construction and total number of occupants. Presumably, the buildings that are highest on this list should be remodelled soon or were recently remodeled and should slide out of this list pretty soon.</p>
+      <code>TODO: Actually make this chart.</code>
+      <!-- Will get appended with Javascript. -->
+    </div>
+
+    <div class="content" id="codes-over-time">
+      <h2 class="content-subhead">Request Types Over Time</h2>
+      <p>Over time, Housing has added and discontinued certain classificaitons over time. Here is a graph showing how many different maintenance codes housing used by year.</p>
+      <div id="codes-by-year" class="ct-chart ct-double-octave"></div>
     </div>
 
     <div class="content" id="categories">
@@ -58,6 +83,7 @@
   </div>
 </div>
 
+<script src="js/point-labels.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/categories.js"></script>
 <script src="js/ui.js"></script>
