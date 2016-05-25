@@ -17,8 +17,8 @@ var lineOptions = {
 
 function showChartByYear (data) {
   data.by_year.sort(function (a, b) {
-    return a.year < b.year
-  }).reverse()
+    return a.year - b.year
+  })
 
   var labels = []
   var dataset = []
@@ -38,8 +38,8 @@ function showChartByYear (data) {
 
 function showChartByMonth (data) {
   data.by_month.sort(function (a, b) {
-    return a.month < b.month
-  }).reverse()
+    return a.month - b.month
+  })
 
   var labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   var dataset = []
@@ -58,7 +58,7 @@ function showChartByMonth (data) {
 
 function showChartByBuilding (data) {
   data.by_building.sort(function (a, b) {
-    return a.count < b.count
+    return a.count - b.count
   })
 
   var labels = []
