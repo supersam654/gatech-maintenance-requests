@@ -1,9 +1,11 @@
+/* globals Chartist XMLHttpRequest */
+
 function getData (jsonUrl, cb) {
   var request = new XMLHttpRequest()
   request.onreadystatechange = function () {
-    if (request.readyState == 4 && request.status == 200) {
-        var data = JSON.parse(request.responseText)
-        cb(data)
+    if (request.readyState === 4 && request.status === 200) {
+      var data = JSON.parse(request.responseText)
+      cb(data)
     }
   }
   request.open('GET', jsonUrl, true)

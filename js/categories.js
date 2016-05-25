@@ -1,9 +1,11 @@
+/* global XMLHttpRequest, Chartist, barOptions */
+
 function getData (jsonUrl, cb) {
   var request = new XMLHttpRequest()
   request.onreadystatechange = function () {
-    if (request.readyState == 4 && request.status == 200) {
-        var data = JSON.parse(request.responseText)
-        cb(data)
+    if (request.readyState === 4 && request.status === 200) {
+      var data = JSON.parse(request.responseText)
+      cb(data)
     }
   }
   request.open('GET', jsonUrl, true)
@@ -49,7 +51,7 @@ function makeCodeTableRow (codeData) {
 }
 
 function getCategories (codeData) {
-  categories = Object.keys(codeData).sort()
+  var categories = Object.keys(codeData).sort()
 
   return categories
 }
@@ -104,9 +106,9 @@ function makeTopCodesSection (data, container) {
   var labels = []
   var series = []
   for (var i = 0; i < codes.length; i++) {
-    var code = codes[i]
-    labels.push(code.code)
-    series.push(code.count)
+    var codeData = codes[i]
+    labels.push(codeData.code)
+    series.push(codeData.count)
   }
   // Add a pretty chart.
   var chartData = {
@@ -123,8 +125,8 @@ function makeTopCodesSection (data, container) {
 }
 
 function showChartByCodesPerYear (data) {
-  codesAdded = {}
-  codesRemoved = {}
+  var codesAdded = {}
+  var codesRemoved = {}
   for (var category in data) {
     var categoryData = data[category]
     for (var code in categoryData) {

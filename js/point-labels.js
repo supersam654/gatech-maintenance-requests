@@ -1,3 +1,4 @@
+/* globals Chartist */
 // Started as https://github.com/gionkunz/chartist-plugin-pointlabels
 (function (window, document, Chartist) {
   var defaultOptions = {
@@ -7,14 +8,16 @@
       y: -10
     },
     textAnchor: 'middle',
-    labelInterpolationFnc: function (value) {return value}
+    labelInterpolationFnc: function (value) {
+      return value
+    }
   }
 
   Chartist.plugins = Chartist.plugins || {}
-  Chartist.plugins.ctPointLabels = function(options) {
+  Chartist.plugins.ctPointLabels = function (options) {
     options = Chartist.extend({}, defaultOptions, options)
 
-    return function ctPointLabels(chart) {
+    return function ctPointLabels (chart) {
       chart.on('draw', function (data) {
         if (data.type === 'point') {
           data.group.elem('text', {
