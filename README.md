@@ -9,10 +9,10 @@ All of the data has been `mongodump`ed very typically into the `dump` directory.
 ## Dependencies
 
 * Python (2 or 3)
-* Requests
-* BeautifulSoup 4
-* PyMongo
 * Mongo 3
+
+
+    pip install requests beautifulsoup4 pymongo profanity
 
 ## Grabbing the latest data
 
