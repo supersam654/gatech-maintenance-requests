@@ -160,7 +160,7 @@ function showChartByCodesPerYear (data) {
   new Chartist.Bar('#codes-by-year', chartData)
 }
 
-getData('frontend_data/categories.json', function (data) {
+getData('site/frontend_data/categories.json', function (data) {
   makeCodeTables(data, document.getElementById('categories'))
   makeTopCodesSection(data, document.getElementById('top-codes'))
   showChartByCodesPerYear(data)

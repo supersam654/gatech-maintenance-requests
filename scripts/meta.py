@@ -5,9 +5,11 @@ from bson import json_util
 
 import db
 
-OUT_FILE = 'frontend_data/categories.json'
+# Note that these paths are relative to the root of the project, not this script.
+IN_FILE = 'scripts/extra_data/descriptions.json'
+OUT_FILE = 'site/frontend_data/categories.json'
 
-with open('descriptions.json') as f:
+with open(IN_FILE) as f:
     descriptions = json.load(f)
 
 def get_all_codes():

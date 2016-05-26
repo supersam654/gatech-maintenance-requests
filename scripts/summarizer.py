@@ -3,7 +3,8 @@ import json
 
 import db
 
-OUT_FILE = 'frontend_data/summaries.json'
+# note that this file is relative to the root of the project, not this file.
+OUT_FILE = 'site/frontend_data/summaries.json'
 
 def summarize_by_year():
     pipeline = [{
