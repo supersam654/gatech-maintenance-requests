@@ -30,3 +30,5 @@
     toggleClass(menuLink, active)
   }
 }(this, this.document))
+smoothScroll.init()
+gumshoe.init()

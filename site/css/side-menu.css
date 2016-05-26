@@ -111,9 +111,12 @@ Add that light border to separate items into groups.
 /*
 Change color of the anchor links on hover/focus.
 */
-#menu .pure-menu li a:hover,
-#menu .pure-menu li a:focus {
+#menu .pure-menu a:hover {
     background: #333;
+}
+
+.pure-menu-link:focus {
+  background: #333;
 }
 
 /*
@@ -124,6 +127,11 @@ This styles the menu heading.
     background: #1f8dd6;
     color: #fff;
     margin: 0;
+}
+
+#menu .pure-menu li a.active {
+  background: #1f8dd6;
+  color: #fff;
 }
 
 /* -- Dynamic Button For Responsive Menu -------------------------------------*/

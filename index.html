@@ -22,15 +22,15 @@
   <div id="menu">
     <div class="pure-menu">
       <span class="pure-menu-heading">Cool Data!</span>
-      <ul class="pure-menu-list">
-        <li class="pure-menu-item"><a href="#top-codes" class="pure-menu-link">Top 10 Request Types</a></li>
-        <li class="pure-menu-item"><a href="#by-year" class="pure-menu-link">Requests by Year</a></li>
-        <li class="pure-menu-item"><a href="#by-month" class="pure-menu-link">Requests by Month</a></li>
-        <li class="pure-menu-item"><a href="#by-building" class="pure-menu-link">Requests by Building</a></li>
-        <li class="pure-menu-item"><a href="#needy-buildings" class="pure-menu-link">Needy Buildings</a></li>
-        <li class="pure-menu-item"><a href="#codes-over-time" class="pure-menu-link">Codes Over Time</a></li>
-        <li class="pure-menu-item"><a href="#profanity" class="pure-menu-link">Profane Requests</a></li>
-        <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">All Codes</a></li>
+      <ul data-gumshoe class="pure-menu-list">
+        <li class="pure-menu-item"><a data-scroll href="#top-codes" class="pure-menu-link">Top 10 Request Types</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#by-year" class="pure-menu-link">Requests by Year</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#by-month" class="pure-menu-link">Requests by Month</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#by-building" class="pure-menu-link">Requests by Building</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#needy-buildings" class="pure-menu-link">Needy Buildings</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#codes-over-time" class="pure-menu-link">Codes Over Time</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#profanity" class="pure-menu-link">Profane Requests</a></li>
+        <li class="pure-menu-item"><a data-scroll href="#categories" class="pure-menu-link">All Codes</a></li>
       </ul>
     </div>
   </div>
@@ -94,7 +94,8 @@
     </div>
   </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gumshoe/3.1.1/js/gumshoe.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/10.0.0/js/smooth-scroll.min.js"></script>
 <script src="site/js/point-labels.js"></script>
 <script src="site/js/summaries.js"></script>
 <script src="site/js/categories.js"></script>
