@@ -104,7 +104,6 @@ Remove all background/borders, since we are applying them to #menu.
 /*
 Add that light border to separate items into groups.
 */
-#menu .pure-menu ul,
 #menu .pure-menu .menu-item-divided {
     border-top: 1px solid #333;
 }
@@ -124,8 +123,6 @@ This styles the menu heading.
 */
 #menu .pure-menu-heading {
     font-size: 110%;
-    background: #1f8dd6;
-    color: #fff;
     margin: 0;
 }
 
