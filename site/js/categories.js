@@ -92,9 +92,11 @@ function makeCodeTableBody (categoryData) {
 function makeTopCodesSection (data, container) {
   var MAX_CODES = 10
   var codes = []
+  var totalCount = 0
   for (var category in data) {
     for (var code in data[category]) {
       codes.push(data[category][code])
+      totalCount += data[category][code].count
     }
   }
 
@@ -105,10 +107,12 @@ function makeTopCodesSection (data, container) {
 
   var labels = []
   var series = []
+  var topTenCount = 0
   for (var i = 0; i < codes.length; i++) {
     var codeData = codes[i]
     labels.push(codeData.code)
     series.push(codeData.count)
+    topTenCount += codeData.count
   }
   // Add a pretty chart.
   var chartData = {
@@ -116,7 +120,12 @@ function makeTopCodesSection (data, container) {
     series: [series]
   }
 
+  // Make the chart.
   new Chartist.Bar('#top-codes-chart', chartData, barOptions)
+
+  // Fill in any missing numbers.
+  document.getElementById('top_10_count').innerText = topTenCount
+  document.getElementById('top_10_percent').innerText = (topTenCount * 100 / totalCount).toFixed(1)
 
   // Add the data table.
   var table = makeCodeTableHead()

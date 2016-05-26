@@ -102,11 +102,14 @@ function showProfaneRequests (data) {
   var totalCount = data.stats.count
   var profaneCount = data.stats.profane_requests
 
-  document.getElementById('total_count').innerText = totalCount
+  var nodes = document.querySelectorAll('.total_count')
+  for (var i = 0; i < nodes.length; i++) {
+    nodes[i].innerText = totalCount
+  }
+
   document.getElementById('profane_count').innerText = profaneCount
   document.getElementById('profane_percent').innerText = (profaneCount * 100 / totalCount).toFixed(4)
 }
-
 
 getData('site/frontend_data/summaries.json', function (data) {
   showChartByYear(data)
