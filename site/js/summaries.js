@@ -98,8 +98,19 @@ function showChartByBuilding (data) {
   new Chartist.Bar('#requests-by-building', chartData, barOptions)
 }
 
+function showProfaneRequests (data) {
+  var totalCount = data.stats.count
+  var profaneCount = data.stats.profane_requests
+
+  document.getElementById('total_count').innerText = totalCount
+  document.getElementById('profane_count').innerText = profaneCount
+  document.getElementById('profane_percent').innerText = (profaneCount * 100 / totalCount).toFixed(4)
+}
+
+
 getData('site/frontend_data/summaries.json', function (data) {
   showChartByYear(data)
   showChartByMonth(data)
   showChartByBuilding(data)
+  showProfaneRequests(data)
 })

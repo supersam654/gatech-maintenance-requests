@@ -29,6 +29,7 @@
         <li class="pure-menu-item"><a href="#by-building" class="pure-menu-link">Requests by Building</a></li>
         <li class="pure-menu-item"><a href="#needy-buildings" class="pure-menu-link">Needy Buildings</a></li>
         <li class="pure-menu-item"><a href="#codes-over-time" class="pure-menu-link">Codes Over Time</a></li>
+        <li class="pure-menu-item"><a href="#profanity" class="pure-menu-link">Profane Requests</a></li>
         <li class="pure-menu-item"><a href="#categories" class="pure-menu-link">All Codes</a></li>
       </ul>
     </div>
@@ -72,6 +73,13 @@
       <h2 class="content-subhead">Request Types Over Time</h2>
       <p>Over time, Housing has added and discontinued certain classificaitons over time. Here is a graph showing how many different maintenance codes housing used by year.</p>
       <div id="codes-by-year" class="ct-chart ct-double-octave"></div>
+    </div>
+
+    <div class="content" id="profanity">
+      <h2 class="content-subhead">Profane Requests</h2>
+      <p>Out of the <code id="total_count"></code> total maintenance requests received, only <code id="profane_count"></code> or <code id="profane_percent"></code>% of them contain profanity.</p>
+
+      <p>Note that a very naive search was done to find profanity and "cock" was removed to prevent excessive false positives with "cockroach."</p>
     </div>
 
     <div class="content" id="categories">
