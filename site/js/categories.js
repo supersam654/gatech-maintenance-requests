@@ -141,11 +141,13 @@ function showChartByCodesPerYear (data) {
     for (var code in categoryData) {
       var codeData = categoryData[code]
       var createdYear = new Date(codeData.first_date.$date).getFullYear()
-      var discontinuedYear = new Date(codeData.last_date.$date).getFullYear()
+      // Not used the year _after_ it was last seen.
+      var discontinuedYear = new Date(codeData.last_date.$date).getFullYear() + 1
 
-      // Poor-man's default dictionary.
-      codesAdded[createdYear] = codesAdded[createdYear] + 1 || 1
-      codesRemoved[discontinuedYear] = codesRemoved[discontinuedYear] + 1 || 1
+      codesAdded[createdYear] = codesAdded[createdYear] || []
+      codesRemoved[discontinuedYear] = codesRemoved[discontinuedYear] || []
+      codesAdded[createdYear].push(code)
+      codesRemoved[discontinuedYear].push(code)
     }
   }
 
@@ -157,8 +159,16 @@ function showChartByCodesPerYear (data) {
   var removed = []
   for (var year = firstYear; year <= lastYear; year++) {
     labels.push(year)
-    added.push(codesAdded[year] || 0)
-    removed.push(-codesRemoved[year] || 0)
+    var addedLength = 0
+    var removedLength = 0
+    if (codesAdded[year]) {
+      addedLength = codesAdded[year].length
+    }
+    if (codesRemoved[year]) {
+      removedLength = -codesRemoved[year].length
+    }
+    added.push(addedLength)
+    removed.push(removedLength)
   }
 
   var chartData = {
@@ -173,4 +183,5 @@ getData('site/frontend_data/categories.json', function (data) {
   makeCodeTables(data, document.getElementById('categories'))
   makeTopCodesSection(data, document.getElementById('top-codes'))
   showChartByCodesPerYear(data)
+  doneRendering()
 })

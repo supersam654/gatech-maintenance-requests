@@ -116,4 +116,5 @@ getData('site/frontend_data/summaries.json', function (data) {
   showChartByMonth(data)
   showChartByBuilding(data)
   showProfaneRequests(data)
+  doneRendering()
 })
