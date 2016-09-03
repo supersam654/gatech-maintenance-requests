@@ -70,7 +70,7 @@ def download_order(order_number):
     response = requests.get('http://128.61.165.203/query_wo_results.html?%s' % order_number)
     if response.ok:
         # Work Orders are encoded as iso-8859-1 so convert them to UTF8.
-        return bytes(response.text, 'iso-8859-1').decode('utf8')
+        return bytes(response.text, 'iso-8859-1').decode('utf8', 'ignore')
     else:
         return None
 
