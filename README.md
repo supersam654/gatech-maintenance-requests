@@ -12,8 +12,16 @@ All of the data has been `mongodump`ed very typically into the `dump` directory.
 
 * Python (2 or 3)
 * Mongo 3
+* lxml (try `pip install lxml` and see the following section if that doesn't work)
 
     pip install -r requirements.txt
+
+### Installing lxml on Windows
+
+`lxml` is a lenient HTML parser that is required to reasonably parse the maintenence request pages. Specifically, the page for Work Orders has horribly invalid markup that is not properly handled by the built-in `html.parser` parser. If you have Visual Studio installed, `pip install lxml` should work for you. Otherwise:
+
+* Download a suitable package from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml (make sure to grab a package that corresponds with your version of python)
+* Run `pip install /path/to/lxml-x.x.x-cpxx-cpxxm-win_xxx.whl`
 
 ## Grabbing the latest data
 

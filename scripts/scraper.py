@@ -12,7 +12,7 @@ def get_row_val(table, row_num, index):
     return table.find_all('tr')[row_num].find_all('td')[index].text.strip()
 
 def scrape_request(html):
-    soup = BS(html, 'html.parser')
+    soup = BS(html, 'lxml')
     table = soup.find('table')
 
     try:
@@ -33,7 +33,7 @@ def scrape_request(html):
         return None
 
 def scrape_order(html):
-    soup = BS(html, 'html.parser')
+    soup = BS(html, 'lxml')
     table = soup.find('table')
 
     try:
