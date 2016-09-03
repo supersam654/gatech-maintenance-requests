@@ -17,12 +17,12 @@ def scrape_request(html):
 
     try:
         data = {}
-        data['work_request'] = get_row_val(table, 0, 4).split('\n')[0]
+        data['work_request'] = int(get_row_val(table, 0, 4).split('\n')[0])
         data['building'] = get_row_val(table, 4, 1)
         data['location_id'] = get_row_val(table, 4, 3)
-        data['accept_date'] = get_row_val(table, 5, 1)
+        data['accept_date'] = to_date(get_row_val(table, 5, 1))
         data['work_order'] = get_row_val(table, 5, 3)
-        data['reject_date'] = get_row_val(table, 6, 1)
+        data['reject_date'] = to_date(get_row_val(table, 6, 1))
         data['room_description'] = get_row_val(table, 6, 3)
         data['reject_reason'] = get_row_val(table, 7, 1)
         data['requested_action'] = get_row_val(table, 9, 1)
@@ -39,12 +39,12 @@ def scrape_order(html):
     try:
         data = {}
         data['work_order'] = get_row_val(table, 0, 4)
-        data['date_closed']= get_row_val(table, 4, 3)
+        data['date_closed']= to_date(get_row_val(table, 4, 3))
         data['campus'] = get_row_val(table, 8, 1)
         data['reference_number'] = get_row_val(table, 8, 3)
         data['building'] = get_row_val(table, 9, 1)
         data['location_id'] = get_row_val(table, 9, 3)
-        data['request_date'] = get_row_val(table, 10, 1)
+        data['request_date'] = to_date(get_row_val(table, 10, 1))
         data['request_time'] = get_row_val(table, 10, 3)
         data['status'] = get_row_val(table, 11, 1)
         data['shop'] = get_row_val(table, 11, 3)
@@ -77,15 +77,19 @@ def download_order(order_number):
 def get_last_request():
     return db.requests.find().sort([('work_request', -1)]).limit(1)[0]['work_request']
 
-def saveData(request_data):
-    request_data['work_request'] = int(request_data['work_request'])
-    request_data['ack_date'] = request_data['accept_date'] or request_data['reject_date']
-    if request_data['ack_date']:
-        request_data['ack_date'] = datetime.datetime.strptime(request_data['ack_date'], '%m/%d/%Y')
+def to_date(s):
+    if len(s) == 0:
+        return None
     else:
+        return datetime.datetime.strptime(s, '%m/%d/%Y')
+
+def saveData(request_data):
+    request_data['ack_date'] = request_data['accept_date'] or request_data['reject_date']
+    if request_data['ack_date'] is None:
         # Don't save requests that haven't been acknowledged yet.
         print('Skipping request because it has no acknowledged date.')
         return False
+
     db.requests.insert(request_data)
     return True
 
