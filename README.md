@@ -10,7 +10,7 @@ All of the data has been `mongodump`ed very typically into the `dump` directory.
 
 ## Dependencies
 
-* Python (2 or 3)
+* Python 3
 * Mongo 3
 * lxml (try `pip install lxml` and see the following section if that doesn't work)
 
@@ -22,6 +22,12 @@ All of the data has been `mongodump`ed very typically into the `dump` directory.
 
 * Download a suitable package from http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml (make sure to grab a package that corresponds with your version of python)
 * Run `pip install /path/to/lxml-x.x.x-cpxx-cpxxm-win_xxx.whl`
+
+### What about Python 2?
+
+From a technical standpoint, doing unicode string conversions with Python 2 and Python 3 is flat out painful.
+
+From a religious standpoint, 2016 is coming to a close and people seriously need to move to Python 3.
 
 ## Grabbing the latest data
 
