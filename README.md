@@ -13,8 +13,7 @@ All of the data has been `mongodump`ed very typically into the `dump` directory.
 * Python (2 or 3)
 * Mongo 3
 
-
-    pip install requests beautifulsoup4 pymongo profanity
+    pip install -r requirements.txt
 
 ## Grabbing the latest data
 
