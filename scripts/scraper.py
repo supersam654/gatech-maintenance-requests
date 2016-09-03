@@ -61,7 +61,6 @@ def scrape_order(html):
 def download_request(request_number):
     response = requests.post('http://128.61.165.203/query_wo.cgi', {'Search': 'WR', 'WorkOrderNumber': request_number})
     if response.ok:
-        # Requests don't have an encoding but appear to be wrapped in a UTF8 page.
         return response.text
     else:
         return None
@@ -69,8 +68,7 @@ def download_request(request_number):
 def download_order(order_number):
     response = requests.get('http://128.61.165.203/query_wo_results.html?%s' % order_number)
     if response.ok:
-        # Work Orders are encoded as iso-8859-1 so convert them to UTF8.
-        return bytes(response.text, 'iso-8859-1').decode('utf8', 'ignore')
+        return response.text
     else:
         return None
 
@@ -111,8 +109,9 @@ def main():
                     order_data = scrape_order(work_order)
                 else:
                     order_data = None
-                print('Scraped order (%s): %s' % (work_order_number, order_data))
-                print('Scraped %s: %s' % (i_as_string, request_data))
+                # print(bytes(order_data['request'], 'utf8'))
+                print('Scraped order (%s): %s' % (work_order_number, str(order_data).encode('utf8', 'ignore')))
+                print('Scraped %s: %s' % (i_as_string, str(request_data).encode('utf8', 'ignore')))
                 request_data['order_data'] = order_data
                 if saveData(request_data):
                     consecutive_failures = 0
